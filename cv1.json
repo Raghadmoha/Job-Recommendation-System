@@ -1,0 +1,10 @@
+{
+    "name": "Alice Smith",
+    "skills": [
+        "Python",
+        "SQL",
+        "Tableau"
+    ],
+    "experience": "3 years as Data Analyst",
+    "education": "BSc Computer Science"
+}
