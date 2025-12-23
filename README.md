@@ -1,46 +1,35 @@
-- Setup and Environment(We installed necessary Python packages):
-⋆ PyPDF2 → to read text from PDF files (CVs and job description)
-⋆ python-dotenv → to securely load the Gemini API key from .env
-⋆ google-genai → official Gemini SDK to interact with the Gemini API
+# LLM-Powered Job Recommendation System 💼
 
-- Created the following project files:
-⋆ extract_info.py → extracts structured data
-⋆ compare_candidates.py → compares CVs against job description and ranks candidates
-⋆ .env → stores the Gemini API key securely (not to be shared)
-⋆ Sample PDFs: jobdescription.pdf, cv1.pdf, cv2.pdf.
-⋆ JSON files (generated automatically): cv1.json, cv2.json
+This project is a **job recommendation system** that automatically extracts information from CVs and ranks candidates based on a job description using the **Gemini AI API**. It provides a fully automated pipeline: **PDF → JSON → Scoring → Ranking**, and is easy to extend for multiple CVs or different job descriptions.
 
-- Comparing candidates:
-⋆ Read job description text and extracted required skills, experience, and education 
-⋆ Scored each candidate based on:
- Skills match → +1 per matching skill
- Experience match → +1 if candidate experience meets or exceeds requirement
- Education match → +1 if degree matches
-⋆ Ranked candidates in descending order of total score
+---
 
-- To Summarize; the project's key features:
-⋆ Fully automated pipeline: PDF → JSON → scoring → ranking.
+## 🚀 Key Features
 
-⋆ Easy to extend for multiple CVs and different job descriptions.
+- **Automated Pipeline**: Convert CVs and job descriptions from PDF to structured JSON, score candidates, and generate a ranking.  
+- **Accurate Extraction**: Uses **Gemini API** to extract structured information (skills, experience, education) from unstructured CV text.  
+- **Flexible & Scalable**: Supports multiple CVs and various job descriptions.  
+- **Secure API Handling**: Gemini API key is loaded securely from `.env`.  
 
-⋆ Gemini API ensures accurate extraction of structured information from CVs.
+---
 
-⋆ Secure handling of API key using .env.
+## 📂 Project Structure
 
-Notes:
-- In the extract_info.py file:
-we need an official Gemini SDK(Software Development Kit) (google-genai) so we install running this in the terminal: py -m pip install google-genai
-The reason we need it is to use it to extract structured JSON 
-and the reason we need to turn unstructured text into structered JSON so that a model(like Gemini) can understand
-so in order to do this we use Gemini API key and send a prompt asking to extract
+- `extract_info.py` → Extracts structured data from CVs using Gemini API.  
+- `compare_candidates.py` → Compares candidates against a job description and ranks them based on scoring.  
+- `utils.py` → Helper functions for loading API keys and extracting text from PDFs.  
+- `app.py` → Streamlit web app for uploading job descriptions and CVs and viewing candidate rankings.  
+- `.env` → Stores your **Gemini API key** (do not share this file).  
+- Sample PDFs → `jobdescription.pdf`, `cv1.pdf`, `cv2.pdf`.  
+- Generated JSON → `cv1.json`, `cv2.json` (created automatically from `extract_info.py`).  
 
-- You can install packages using:
+---
+
+## 🔧 Setup & Environment
+Ensure you provide your api key:
+GEMINI_API_KEY=
+and
+Install the required Python packages using:
+
+```bash
 py -m pip install -r requirements.txt
-
-- To run:
-py extract_info.py
-py compare_candidates.py
-streamlit run app.py
-
-
-cd "C:\Users\ECC\OneDrive\Documents\AI Bootcamp IEEE\Project 3\Job-Recommendation-System"
