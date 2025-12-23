@@ -4,31 +4,29 @@ import re
 # Function to get JSON from CV text
 def extract_cv_json(cv_text, client):
     prompt = f"""
-    You are an AI assistant that extracts structured information from resumes/CVs.
-    Your task is to read the CV text below and output **valid JSON only** with the keys: 
-    - name
-    - skills
-    - experience
-    - education
+You are an AI assistant specialized in extracting structured information from resumes/CVs. 
+Your goal is to read the CV text below and return **only valid JSON** with the following keys:
 
-    Requirements:
-    1. **Skills** must be a list of unique items (no duplicates). Include technical skills, tools, programming languages, frameworks, or domain knowledge inferred from the text.
-    2. **Experience** should summarize relevant work experience, including years and roles if mentioned. Infer the relevance if not explicit.
-    3. **Education** should capture formal degrees, certifications, or equivalent relevant training. If the CV does not explicitly mention a degree but shows relevant expertise (e.g., AI, Machine Learning, Deep Learning), describe it in a concise way.
-    4. If a field is not explicitly stated, infer it from context in a reasonable way. Do not invent unrelated information.
-    5. Do not include extra text or commentary — output **JSON only**.
+- "name": Full name of the candidate.
+- "skills": List of unique skills, tools, programming languages, frameworks, or domain expertise inferred from the CV.
+- "experience": A concise summary of relevant work experience, including years and roles if mentioned.
+- "education": Formal degrees, certifications, or equivalent relevant training. If a degree is not explicitly mentioned, summarize relevant expertise.
 
-    Example output format:
-    {{
-      "name": "Alice Smith",
-      "skills": ["Python", "SQL", "Tableau", "Machine Learning"],
-      "experience": "3 years as Data Analyst focusing on predictive modeling",
-      "education": "BSc Computer Science or equivalent AI-related expertise"
-    }}
+Important instructions:
 
-    CV Text:
-    {cv_text}
-    """
+1. Output **JSON only** — no extra text or commentary.
+2. Deduplicate skills; include all relevant technical or domain knowledge.
+3. For experience, extract the number of years if mentioned and highlight relevant roles.
+4. For education, capture degrees, certifications, or summarize relevant expertise if a degree is missing.
+5. **Infer relevant expertise**: 
+   - If the CV contains skills or projects related to a field (e.g., NLP, Machine Learning, PyTorch) but does not explicitly state a job title (e.g., "AI Engineer"), infer the candidate’s relevant expertise and include it in experience/education if appropriate.
+   - Avoid inventing unrelated information; only infer expertise from the CV content.
+6. Be precise, concise, and factual.
+
+CV Text:
+{cv_text}
+"""
+
 
     response = client.models.generate_content(
         model="gemini-2.5-flash",
